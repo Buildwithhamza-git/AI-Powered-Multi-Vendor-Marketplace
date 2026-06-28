@@ -12,11 +12,10 @@ const {
     deleteProductController,
 } = require("../controllers/productController");
 
-router.post("/", authMiddleware, requireRole("seller"), validateCreateProduct, createProductController);
+router.post("/", authMiddleware, requireRole("seller"), upload.single("image"), validateCreateProduct, createProductController);
 router.get("/seller", authMiddleware, requireRole("seller"), getSellerProductsController);
 router.get("/", getAllProductsController);
-router.put("/:id", authMiddleware, requireRole("seller"), validateUpdateProduct, updateProductController);
+router.put("/:id", authMiddleware, requireRole("seller"), upload.single("image"), validateUpdateProduct, updateProductController);
 router.delete("/:id", authMiddleware, requireRole("seller"), deleteProductController);
-router.post("/",authMiddleware,requireRole("seller"),upload.single("image"),validateCreateProduct,createProductController
-);
+
 module.exports = router;

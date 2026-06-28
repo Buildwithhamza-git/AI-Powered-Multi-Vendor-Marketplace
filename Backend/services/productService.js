@@ -1,9 +1,9 @@
 const AppError = require("../utils/AppError");
 const {
     createProduct,
-    findProductsBySeller,
+    findProductBySeller,
     findProductById,
-    updateProductById,
+    updateProductByid,
     deleteProductById,
     findAllProducts,
 } = require("../repositories/prooductRepository");
@@ -13,7 +13,7 @@ const createProductService = async (productData, sellerId) => {
 };
 
 const getSellerProductsService = async (sellerId) => {
-    return await findProductsBySeller(sellerId);
+    return await findProductBySeller(sellerId);
 };
 
 const getAllProductsService = async () => {
@@ -31,7 +31,7 @@ const updateProductService = async (productId, updates, sellerId) => {
         throw new AppError("You do not have permission to edit this product", null, 403);
     }
 
-    return await updateProductById(productId, updates);
+    return await updateProductByid(productId, updates);
 };
 
 const deleteProductService = async (productId, sellerId) => {

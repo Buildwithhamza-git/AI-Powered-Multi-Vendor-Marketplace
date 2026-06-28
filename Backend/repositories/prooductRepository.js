@@ -5,7 +5,7 @@ const  createProduct = async(productData)=>{
 }
 
 const findProductBySeller = async(sellerId)=>{
-    return await Product.find({sellerId}.sort({createdAt:-1}))
+    return await Product.find({sellerId}).sort({createdAt:-1})
 }
 
 const findProductById = async(id)=>{
@@ -13,11 +13,11 @@ const findProductById = async(id)=>{
 }
 
 const updateProductByid = async (id, updates)=>{
-    return await Product.findOneAndUpdate(id, updates, {new:true})
+    return await Product.findOneAndUpdate({_id:id}, updates, {new:true})
 }
 
 const deleteProductById = async (id)=>{
-    return await Product.findOneAndDelete(id)
+    return await Product.findOneAndDelete({_id:id})
 }
 
 const findAllProducts = async()=>{

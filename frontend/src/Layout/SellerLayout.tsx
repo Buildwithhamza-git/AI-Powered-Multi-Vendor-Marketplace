@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import { SellerTopbar } from "@/components/auth/seller/SellerTopbar";
-import { Sidebar } from "@/components/auth/seller/sidebar";
+import { SellerTopbar } from "@/components/seller/SellerTopbar";
+import { Sidebar } from "@/components/seller/sidebar";
 
 export function SellerLayout() {
   return (

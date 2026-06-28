@@ -184,6 +184,5 @@ const requireRole = (role) => {
     };
 };
 
-module.exports = { authMiddleware, requireRole };
 
-module.exports = { validateSignup , validatelogin, validateVerifyOtp, validateResendOtp, validateForgotPassword, validateResetPassword};
+module.exports = {authMiddleware, requireRole , validateSignup , validatelogin, validateVerifyOtp, validateResendOtp, validateForgotPassword, validateResetPassword};

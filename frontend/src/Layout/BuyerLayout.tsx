@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { Navbar } from "@/components/auth/Buyer/Navbar";
+import { Navbar } from "@/components/Buyer/Navbar";
 
 export function BuyerLayout() {
   return (
