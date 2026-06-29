@@ -29,35 +29,17 @@ export function SignupForm({ role, form, onSubmit , isLoading, onLogin}: SignupF
         <InputField label="Store Name" error={errors.storename?.message} {...register("storename")} />
       )}
 
-      <InputField
-        label="Password"
-        type="password"
-        error={errors.password?.message}
-        {...register("password")}
-      />
-      <InputField
-        label="Confirm Password"
-        type="password"
-        error={errors.confirmPassword?.message}
-        {...register("confirmPassword")}
-      />
+      <InputField label="Password" type="password" error={errors.password?.message} {...register("password")}/>
+      <InputField label="Confirm Password" type="password" error={errors.confirmPassword?.message} {...register("confirmPassword")}/>
 
-      <button
-  type="submit"
-  disabled={isLoading}
-  className="mt-2 rounded-xl bg-indigo-600 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
->
-  {isLoading ? "Signing up..." : "Create Account"}
-</button>
-<div className="mt-6 text-center text-sm text-gray-600">
-  Already have an account?{" "}
-  <button
-    type="button"
-    onClick={onLogin}
-    className="font-semibold text-indigo-600 hover:underline"
-  >
-    Login
-  </button>
+      <button type="submit" disabled={isLoading} className="mt-2 rounded-xl bg-indigo-600 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60">
+          {isLoading ? "Signing up..." : "Create Account"}
+      </button>
+
+      <div className="mt-6 text-center text-sm text-gray-600">Already have an account?{" "}
+      <button type="button" onClick={onLogin} className="font-semibold text-indigo-600 hover:underline">Login
+        
+      </button>
 </div>
     </form>
   );

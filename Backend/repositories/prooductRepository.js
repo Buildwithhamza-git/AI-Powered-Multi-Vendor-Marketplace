@@ -4,9 +4,39 @@ const  createProduct = async(productData)=>{
     return await Product.create(productData)
 }
 
-const findProductBySeller = async(sellerId)=>{
-    return await Product.find({sellerId}).sort({createdAt:-1})
-}
+const findProductBySeller = async (sellerId, { search = "", page = 1, limit = 12 } = {}) => {
+    const filter = { sellerId };
+
+    if (search) {
+        filter.name = { $regex: search, $options: "i" };
+    }
+
+    const skip = (page - 1) * limit;
+
+    const [products, total] = await Promise.all([
+        Product.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit),
+        Product.countDocuments(filter),
+    ]);
+
+    return { products, total };
+};
+
+const findAllProducts = async ({ search = "", page = 1, limit = 12 } = {}) => {
+    const filter = {};
+
+    if (search) {
+        filter.name = { $regex: search, $options: "i" };
+    }
+
+    const skip = (page - 1) * limit;
+
+    const [products, total] = await Promise.all([
+        Product.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit),
+        Product.countDocuments(filter),
+    ]);
+
+    return { products, total };
+};
 
 const findProductById = async(id)=>{
     return await Product.findById(id);
@@ -20,8 +50,5 @@ const deleteProductById = async (id)=>{
     return await Product.findOneAndDelete({_id:id})
 }
 
-const findAllProducts = async()=>{
-    return (await Product.find()).toSorted({createdAt: -1})
-}
 
 module.exports  = {createProduct, findProductBySeller, findProductById, updateProductByid, deleteProductById, findAllProducts}

@@ -4,6 +4,9 @@ import type { Product } from "@/types/product.types";
 interface ProductListResponse {
   success: boolean;
   count: number;
+  total: number;
+  page: number;
+  totalPages: number;
   data: Product[];
 }
 
@@ -13,9 +16,13 @@ interface ProductResponse {
   data: Product;
 }
 
-export async function getSellerProducts(token: string) {
+export async function getSellerProducts(
+  token: string,
+  params: { search?: string; page?: number; limit?: number } = {}
+) {
   const res = await api.get<ProductListResponse>("/products/seller", {
     headers: { Authorization: `Bearer ${token}` },
+    params,
   });
   return res.data;
 }

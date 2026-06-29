@@ -16,6 +16,7 @@ import CartPage from "./pages/CartPage";
 import OrderTrackingPage from "./pages/OrderTrackingPage";
 import AccountPage from "./pages/AccountPage";
 
+
 function App() {
   return (
     <Routes>
@@ -40,19 +41,19 @@ function App() {
         <Route path="analytics" element={<SellerAnalyticsPage />} />
       </Route>
       <Route
-  path="/buyer"
-  element={
-    <ProtectedRoute allowedRole="buyer">
-      <BuyerLayout />
-    </ProtectedRoute>
-  }
->
-  <Route index element={<Navigate to="/buyer/home" replace />} />
-  <Route path="home" element={<BuyerHomePage />} />
-  <Route path="cart" element={<CartPage />} />
-  <Route path="track-order" element={<OrderTrackingPage />} />
-  <Route path="account" element={<AccountPage />} />
-</Route>
+        path="/buyer"
+        element={
+          <ProtectedRoute allowedRole="buyer">
+            <BuyerLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<Navigate to="/buyer/home" replace />} />
+        <Route path="home" element={<BuyerHomePage />} />
+        <Route path="cart" element={<CartPage />} />
+        <Route path="track-order" element={<OrderTrackingPage />} />
+        <Route path="account" element={<AccountPage />} />
+      </Route>
     </Routes>
   );
 }

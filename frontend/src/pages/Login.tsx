@@ -37,10 +37,18 @@ export default function LoginPage() {
   } catch (err) {
     if (axios.isAxiosError(err)) {
       const data = err.response?.data as { message?: string; field?: keyof LoginSchema };
-      if (data?.field) {
-        setError(data.field, { type: "server", message: data.message });
-      } else {
-        console.error("Login failed:", data?.message ?? err.message);
+      
+      if(data.message?.toLowerCase().includes("email")) {
+        setError("email", {
+          type: "server",
+          message: data.message,
+        });
+      }
+      if(data.message?.includes("password")) {
+        setError("password", {
+          type: "server",
+          message: data.message,
+        });
       }
     } else {
       console.error("Unexpected error:", err);

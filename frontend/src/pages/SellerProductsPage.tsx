@@ -14,23 +14,28 @@ export default function SellerProductsPage() {
   const [showModal, setShowModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | undefined>(undefined);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+const [page, setPage] = useState(1);
+const [totalPages, setTotalPages] = useState(1);
 
-  useEffect(() => {
-    loadProducts();
-  }, []);
 
   async function loadProducts() {
-    if (!token) return;
-    setIsLoading(true);
-    try {
-      const res = await getSellerProducts(token);
-      setProducts(res.data);
-    } catch (err) {
-      console.error("Failed to load products:", err);
-    } finally {
-      setIsLoading(false);
-    }
+  if (!token) return;
+  setIsLoading(true);
+  try {
+    const res = await getSellerProducts(token, { search, page, limit: 12 });
+    setProducts(res.data);
+    setTotalPages(res.totalPages);
+  } catch (err) {
+    console.error("Failed to load products:", err);
+  } finally {
+    setIsLoading(false);
   }
+}
+
+useEffect(() => {
+  loadProducts();
+}, [search, page]);
 
   function buildFormData(values: ProductSchema, imageFile: File | null) {
     const formData = new FormData();
@@ -82,12 +87,27 @@ export default function SellerProductsPage() {
           + Add Product
         </button>
       </div>
+      <div className="mb-4">
+  <input
+    type="text"
+    placeholder="Search your products..."
+    value={search}
+    onChange={(e) => {
+      setSearch(e.target.value);
+      setPage(1);
+    }}
+    className="w-full max-w-sm rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-orange-500"
+  />
+</div>  
 
       {isLoading ? (
         <p className="text-sm text-gray-500">Loading products...</p>
       ) : products.length === 0 ? (
-        <p className="text-sm text-gray-500">No products found. Add your first product.</p>
-      ) : (
+  <p className="text-sm text-gray-500">
+    {search ? `No products found for "${search}".` : "No products found. Add your first product."}
+  </p>
+) : (
+
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {products.map((product) => (
             <ProductCard
@@ -102,6 +122,29 @@ export default function SellerProductsPage() {
           ))}
         </div>
       )}
+      {totalPages > 1 && (
+  <div className="mt-6 flex justify-center gap-2">
+    <button
+      type="button"
+      disabled={page === 1}
+      onClick={() => setPage((p) => p - 1)}
+      className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm disabled:opacity-40"
+    >
+      Previous
+    </button>
+    <span className="px-3 py-1.5 text-sm text-gray-600">
+      Page {page} of {totalPages}
+    </span>
+    <button
+      type="button"
+      disabled={page === totalPages}
+      onClick={() => setPage((p) => p + 1)}
+      className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm disabled:opacity-40"
+    >
+      Next
+    </button>
+  </div>
+)}
 
       {showModal && (
         <ProductFormModal

@@ -1,22 +1,17 @@
 import { NavLink } from "react-router-dom";
 import { ShoppingCart, Search, PackageSearch, UserCircle } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import { useCart } from "@/context/CartContext";
 
 export function Navbar() {
   const { logout } = useAuth();
+  const { totalItems } = useCart();
 
   return (
     <header className="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-6">
       <h2 className="text-lg font-bold text-gray-900">ShopHub</h2>
 
-      <div className="flex w-full max-w-md items-center gap-2 rounded-lg bg-gray-100 px-3 py-2">
-        <Search size={16} className="text-gray-400" />
-        <input
-          type="text"
-          placeholder="Search products..."
-          className="w-full bg-transparent text-sm outline-none placeholder:text-gray-400"
-        />
-      </div>
+      
 
       <nav className="flex items-center gap-5">
         <NavLink
@@ -39,7 +34,7 @@ export function Navbar() {
         <NavLink to="/buyer/cart" className="relative text-gray-600 hover:text-gray-900" aria-label="Cart">
           <ShoppingCart size={20} />
           <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-indigo-600 text-[10px] font-bold text-white">
-            0
+            {totalItems}
           </span>
         </NavLink>
 

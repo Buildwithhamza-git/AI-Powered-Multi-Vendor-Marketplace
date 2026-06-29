@@ -23,8 +23,22 @@ const createProductController = async (req, res) => {
 
 const getSellerProductsController = async (req, res) => {
     try {
-        const products = await getSellerProductsService(req.user.userId);
-        return res.status(200).json({ success: true, count: products.length, data: products });
+        const { search = "", page = 1, limit = 12 } = req.query;
+
+        const { products, total } = await getSellerProductsService(req.user.userId, {
+            search,
+            page: Number(page),
+            limit: Number(limit),
+        });
+
+        return res.status(200).json({
+            success: true,
+            count: products.length,
+            total,
+            page: Number(page),
+            totalPages: Math.ceil(total / Number(limit)),
+            data: products,
+        });
     } catch (err) {
         return res.status(err.statusCode || 400).json({ success: false, message: err.message });
     }
@@ -32,8 +46,22 @@ const getSellerProductsController = async (req, res) => {
 
 const getAllProductsController = async (req, res) => {
     try {
-        const products = await getAllProductsService();
-        return res.status(200).json({ success: true, count: products.length, data: products });
+        const { search = "", page = 1, limit = 12 } = req.query;
+
+        const { products, total } = await getAllProductsService({
+            search,
+            page: Number(page),
+            limit: Number(limit),
+        });
+
+        return res.status(200).json({
+            success: true,
+            count: products.length,
+            total,
+            page: Number(page),
+            totalPages: Math.ceil(total / Number(limit)),
+            data: products,
+        });
     } catch (err) {
         return res.status(err.statusCode || 400).json({ success: false, message: err.message });
     }

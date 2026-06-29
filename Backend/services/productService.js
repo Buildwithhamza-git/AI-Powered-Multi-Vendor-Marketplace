@@ -12,12 +12,12 @@ const createProductService = async (productData, sellerId) => {
     return await createProduct({ ...productData, sellerId });
 };
 
-const getSellerProductsService = async (sellerId) => {
-    return await findProductBySeller(sellerId);
+const getSellerProductsService = async (sellerId, queryOptions) => {
+    return await findProductBySeller(sellerId, queryOptions);
 };
 
-const getAllProductsService = async () => {
-    return await findAllProducts();
+const getAllProductsService = async (queryOptions) => {
+    return await findAllProducts(queryOptions);
 };
 
 const updateProductService = async (productId, updates, sellerId) => {
