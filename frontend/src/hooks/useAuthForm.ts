@@ -5,7 +5,7 @@ import  { signupSchema} from "@/schemas/signupSchema";
 import  type {  SignupInput, SignupOutput } from "@/schemas/signupSchema";
 import type { AuthMode, AuthRole } from "@/types/auth.types";
 
-export function useAuthForm() {
+export function  useAuthForm() {
     const [role, setrole] = useState<AuthRole>("buyer")
     const [mode, setMode] = useState<AuthMode>("signup")
 
